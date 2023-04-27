@@ -1,0 +1,49 @@
+/* .skill {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.skillname {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.skillnameskillimage{
+    display: flex;
+}
+
+.skillimage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.skillimage>img{
+    width: 40px;
+} */
+.skillnameskillimage{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    grid-gap: 10px;
+    gap: 0px;
+    width: 250px;
+}
+.skill{
+    gap: 20px;
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+}
+.years_and_preficiency{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.years_and_preficiency>input{
+    width: 100px;
+}
