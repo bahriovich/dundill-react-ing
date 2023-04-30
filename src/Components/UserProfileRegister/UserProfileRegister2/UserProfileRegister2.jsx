@@ -1,61 +1,66 @@
-import React, { useRef, useState } from 'react'
-import { techData } from '../../../utils/techStackData'
-import Select from 'react-select';
+import React, { useRef, useState } from "react";
+import { techData } from "../../../utils/techStackData";
+import Select from "react-select";
 
+function UserProfileRegister2({
+  userProfileData,
+  setUserProfileData,
+  handleChange,
+}) {
+  const filteredSkills = techData.filter((skill) => {
+    return skill.skill_stacks.some(
+      (stack) =>
+        stack.name.toLocaleLowerCase() ===
+        userProfileData.signUpProfileData.role.toLocaleLowerCase()
+    );
+  });
 
-function UserProfileRegister2({ role, setSelectedValue, selectedValue, signUpProfileData, setSignUpProfileData }) {
+  const techStack = filteredSkills.map((elem) => ({
+    ...elem,
+    value: elem.name,
+    label: elem.name,
+  }));
 
+  const handleChangeTeck = (selectedOption) => {
+    let teckData = selectedOption.map((el) => ({
+      ...el,
+      practicalPeriod: "",
+      proficiencyLevelName: "",
+    }));
 
-    const filteredSkills = techData.filter(skill => {
-        return skill.skill_stacks.some(stack => stack.name.toLocaleLowerCase() === signUpProfileData.role.toLocaleLowerCase());
-    });
-   
+    handleChange(null, "signUpProfileData", 0, "techStack", teckData);
+  };
 
-    const techStack = filteredSkills.map((elem) => ({ ...elem,value: elem.name, label: elem.name }))
-    
-
-    const handleChange = (selectedOption) => {
-        
-        let teckData = selectedOption.map((el)=> ({...el,practicalPeriod: "",proficiencyLevelName: ""}))
-        
-        setSignUpProfileData((prev) => {
-            let data = {...prev}    
-            data.techStack = teckData
-            return data
-        })
-
-    }
-  
-
-    return (<>
-        <div className='left-side'>
-            <div className='left-side-content'>
-                <h2>What's your tech stack ?</h2>
-            </div>
+  return (
+    <>
+      <div className="left-side">
+        <div className="left-side-content">
+          <h2>What's your tech stack ?</h2>
         </div>
-        <div className='right-side'>
-            <div className='right-side-form'>
-                <div className='form'>
-                    <form action="">
-                        <div className="form-group">
-
-                            <div>
-                                <h3>search the skill you’re looking for</h3>
-                                <Select
-                                    onChange={handleChange}
-                                    isMulti
-                                    name="teckStack"
-                                    options={techStack}
-                                    className="basic-multi-select"
-                                    classNamePrefix="select"
-                                />
-                            </div>
-                        </div>
-                    </form>
+      </div>
+      <div className="right-side">
+        <div className="right-side-form">
+          <div className="form">
+            <form action="">
+              <div className="form-group">
+                <div>
+                  <h3>search the skill you’re looking for</h3>
+                  <Select
+                    onChange={handleChangeTeck}
+                    isMulti
+                    name="teckStack"
+                    options={techStack}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
                 </div>
-            </div>
+              </div>
+            </form>
+          </div>
         </div>
-    </>)
+      </div>
+    </>
+  );
 }
 
-export default UserProfileRegister2
+export default UserProfileRegister2;
