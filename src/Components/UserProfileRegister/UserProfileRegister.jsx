@@ -22,8 +22,8 @@ function UserProfileRegister() {
         degreeName: "",
         fieldOfStudy: "",
         school: "",
-        startDate: "",
-        endDate: "",
+        startDate: new Date(),
+        endDate: new Date(),
       },
     ],
     professionalExperienceData: [
@@ -31,12 +31,30 @@ function UserProfileRegister() {
         companyName: "",
         startDate: new Date(),
         endDate: new Date(),
-        stillWorking: "",
+        stillWorking: false,
         title: "",
         description: "",
         duration: "",
       },
     ],
+    certifications: [
+      {
+        certificationName: "",
+        certificationDescription: "",
+        certificationLink: "",
+        certificationDate: new Date(),
+        doesItExpire: false,
+        expDate: new Date(),
+      },
+    ],
+    profileSummary: {
+      profile: "",
+      commitment: "",
+      availability: "",
+      availabilityDate: new Date(),
+      linkedInUrl: "",
+      githubUrl: "",
+    },
   });
 
   const handleChange = (event, stateKey, index, nestedKey, value) => {
@@ -124,9 +142,21 @@ function UserProfileRegister() {
           />
         );
       case 5:
-        return <UserProfileRegister6 />;
+        return (
+          <UserProfileRegister6
+            userProfileData={userProfileData}
+            setUserProfileData={setUserProfileData}
+            handleChange={handleChange}
+          />
+        );
       case 6:
-        return <UserProfileRegister7 />;
+        return (
+          <UserProfileRegister7
+            userProfileData={userProfileData}
+            setUserProfileData={setUserProfileData}
+            handleChange={handleChange}
+          />
+        );
       default:
         return <UserProfileRegister1 />;
     }

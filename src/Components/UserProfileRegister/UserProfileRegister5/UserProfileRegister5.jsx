@@ -1,38 +1,38 @@
-import { React, useState } from "react";
+import { React } from "react";
+
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { DatePicker } from "antd";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Divider } from "antd";
 
-function UserProfileRegister5() {
-  const [allPlayers, setAllPlayers] = useState([
-    { name: "", description: "", price: null, rating: null },
-  ]);
-
-  const handleAddPlayers = () => {
-    const values = [...allPlayers];
-    values.push({
-      name: "",
-      description: "",
-      price: null,
-      rating: null,
+function UserProfileRegister5({
+  userProfileData,
+  setUserProfileData,
+  handleChange,
+}) {
+  function addNewEducation() {
+    let eduObject = {
+      degreeName: "",
+      fieldOfStudy: "",
+      school: "",
+      startDate: new Date(),
+      endDate: new Date(),
+    };
+    setUserProfileData((prev) => {
+      let data = { ...prev };
+      data.educationData = [...data.educationData, eduObject];
+      return data;
     });
-    setAllPlayers(values);
-  };
+  }
+  function removeEducationFields(index) {
+    setUserProfileData((prev) => {
+      let data = { ...prev };
 
-  const handleRemovePlayers = (index) => {
-    const values = [...allPlayers];
-    values.splice(index, 1);
-    setAllPlayers(values);
-  };
-
-  const handleInputChange = (index, event) => {
-    const values = [...allPlayers];
-    const updatedValue = event.target.name;
-    values[index][updatedValue] = event.target.value;
-
-    setAllPlayers(values);
-  };
-
-  console.log(allPlayers);
+      data.educationData.splice(index, 1);
+      return data;
+    });
+  }
 
   return (
     <>
@@ -47,10 +47,10 @@ function UserProfileRegister5() {
             className="form"
             style={{
               display: "flex",
-              "flex-direction": "column",
+              flexDirection: "column",
               "align-items": "center",
               height: "80vh",
-              "justify-content": "flex-start",
+              justifyContent: "flex-start",
             }}
           >
             <form action="">
@@ -60,112 +60,212 @@ function UserProfileRegister5() {
                     <Col
                       xs="6"
                       className="dynamic-form-headings"
-                      style={{ display: "flex", "justify-content": "center" }}
-                    >
-                      <Button
-                        variant="primary"
-                        onClick={() => handleAddPlayers()}
-                      >
-                        Add Your Education
-                      </Button>
-                    </Col>
+                      style={{ display: "flex", justifyContent: "center" }}
+                    ></Col>
                     <Col xs="12">
-                      <Form>
+                      <Form style={{ maxHeight: 700, overflowY: "auto" }}>
                         <Row className="justify-content-center">
-                          {allPlayers.length > 0 && (
+                          {userProfileData.educationData.length > 0 && (
                             <>
-                              {allPlayers.map((field, index) => (
-                                <Col xs="4">
-                                  <div className="add-player-div">
-                                    <h4>Education {index + 1}</h4>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        Degree Name{" "}
-                                      </label>
-                                      <input
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="degreename"
-                                        style={{ width: "40vw" }}
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        Field of Study
-                                      </label>
-                                      <input
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="fieldstudy"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        School
-                                      </label>
-                                      <input
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="school"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{
-                                        display: "flex",
-                                        "flex-direction": "row",
-                                        "align-items": "center",
-                                        "justify-content": "space-around",
-                                        marginBottom: "20px",
-                                      }}
-                                    >
-                                      <div className="startDate">
-                                        <label className="form-label">
-                                          Start Date{" "}
-                                        </label>
-                                        <DatePicker />
-                                      </div>
-                                      <div className="endDate">
-                                        <label className="form-label">
-                                          End Date{" "}
-                                        </label>
-                                        <DatePicker />
-                                      </div>
-                                    </Form.Group>
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                      }}
-                                    >
-                                      <Button
-                                        variant="secondary"
-                                        onClick={() =>
-                                          handleRemovePlayers(index)
-                                        }
+                              {userProfileData.educationData.map(
+                                (field, index) => (
+                                  <Col xs="4">
+                                    <div className="add-player-div">
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
                                       >
-                                        Cancel
-                                      </Button>
+                                        <h4>Education {index + 1}</h4>
+                                        <div>
+                                          {index === 0 && (
+                                            <button
+                                              style={{
+                                                backgroundColor: "#FF3769",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                border: 0,
+                                                cursor: "pointer",
+                                                width: 75,
+                                                marginRight: 10,
+                                              }}
+                                              variant="primary"
+                                              onClick={() => addNewEducation()}
+                                            >
+                                              <PlusOutlined
+                                                style={{
+                                                  fontSize: "23px",
+                                                  color: "white",
+                                                }}
+                                              />
+                                            </button>
+                                          )}
+                                          {userProfileData.educationData
+                                            .length > 1 && (
+                                            <Button
+                                              style={{
+                                                backgroundColor: "#FF3769",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                border: 0,
+                                                cursor: "pointer",
+                                                width: 75,
+                                                marginRight: 10,
+                                              }}
+                                              variant="secondary"
+                                              onClick={() =>
+                                                removeEducationFields(index)
+                                              }
+                                            >
+                                              <DeleteOutlined
+                                                style={{
+                                                  fontSize: "23px",
+                                                  color: "white",
+                                                }}
+                                              />
+                                            </Button>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Degree Name{" "}
+                                        </label>
+                                        <input
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="degreeName"
+                                          value={field.degreeName}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "educationData",
+                                              index,
+                                              "degreeName"
+                                            )
+                                          }
+                                          style={{ width: "40vw" }}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Field Of Study{" "}
+                                        </label>
+                                        <input
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="fieldOfStudy"
+                                          value={field.fieldOfStudy}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "educationData",
+                                              index,
+                                              "fieldOfStudy"
+                                            )
+                                          }
+                                          style={{ width: "40vw" }}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          School{" "}
+                                        </label>
+                                        <input
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="school"
+                                          value={field.shcool}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "educationData",
+                                              index,
+                                              "school"
+                                            )
+                                          }
+                                          style={{ width: "40vw" }}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          "align-items": "center",
+                                          justifyContent: "space-around",
+                                          marginBottom: "20px",
+                                          gap: 10,
+                                        }}
+                                      >
+                                        <div className="startDate">
+                                          <label className="form-label">
+                                            Start Date{" "}
+                                          </label>
+                                          <DatePicker
+                                            className="form-input"
+                                            name="startDate"
+                                            onChange={(date) =>
+                                              handleChange(
+                                                null,
+                                                "educationData",
+                                                index,
+                                                "startDate",
+                                                date.toISOString()
+                                              )
+                                            }
+                                            selected={
+                                              new Date(field?.startDate)
+                                            }
+                                            dateFormat="dd/MM/yyyy"
+                                          />
+                                        </div>
+                                        <div className="endDate">
+                                          <label className="form-label">
+                                            End Date{" "}
+                                          </label>
+                                          <DatePicker
+                                            onChange={(date) =>
+                                              handleChange(
+                                                null,
+                                                "educationData",
+                                                index,
+                                                "endDate",
+                                                date.toISOString()
+                                              )
+                                            }
+                                            className="form-input"
+                                            name="endDate"
+                                            selected={new Date(field?.endDate)}
+                                            dateFormat="dd/MM/yyyy"
+                                          />
+                                        </div>
+                                      </Form.Group>
+
+                                      <Divider style={{ width: "100%" }} />
                                     </div>
-                                  </div>
-                                </Col>
-                              ))}
+                                  </Col>
+                                )
+                              )}
                             </>
                           )}
                         </Row>

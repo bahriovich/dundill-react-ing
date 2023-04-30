@@ -35,9 +35,20 @@ function UserProfileRegister1({
         <div className="right-side-form">
           <div className="form">
             <form action="">
-              <div className="form-group">
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <label className="form-label">Role </label>
-                <Radio.Group defaultValue="a" size="large">
+                <Radio.Group
+                  style={{
+                    width: "auto",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 10,
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}
+                  defaultValue="a"
+                  size="large"
+                >
                   {options.map((elem, index) => (
                     <div key={index}>
                       <Radio.Button

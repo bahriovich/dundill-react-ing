@@ -1,40 +1,39 @@
 import { React, useState } from "react";
+
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Divider } from "antd";
 
-function UserProfileRegister6({ eduactionData, setEducationData }) {
-  const [allPlayers, setAllPlayers] = useState([
-    { name: "", description: "", price: null, rating: null },
-  ]);
-
-  const handleAddPlayers = () => {
-    const values = [...allPlayers];
-    values.push({
-      name: "",
-      description: "",
-      price: null,
-      rating: null,
+function UserProfileRegister6({
+  userProfileData,
+  setUserProfileData,
+  handleChange,
+}) {
+  function addNewCertification() {
+    let expObject = {
+      certificationName: "",
+      certificationDescription: "",
+      certificationLink: "",
+      certificationDate: new Date(),
+      doesItExpire: false,
+      expDate: new Date(),
+    };
+    setUserProfileData((prev) => {
+      let data = { ...prev };
+      data.certifications = [...data.certifications, expObject];
+      return data;
     });
-    setAllPlayers(values);
-  };
-
-  const handleRemovePlayers = (index) => {
-    const values = [...allPlayers];
-    values.splice(index, 1);
-    setAllPlayers(values);
-  };
-
-  const handleInputChange = (index, event) => {
-    const values = [...allPlayers];
-    const updatedValue = event.target.name;
-    values[index][updatedValue] = event.target.value;
-
-    setAllPlayers(values);
-  };
-
-  console.log(allPlayers);
-
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  }
+  function removeCertificationFields(index) {
+    setUserProfileData((prev) => {
+      let data = { ...prev };
+      data.certifications.splice(index, 1);
+      return data;
+    });
+  }
+  console.log(userProfileData);
   return (
     <>
       <div className="left-side">
@@ -48,10 +47,10 @@ function UserProfileRegister6({ eduactionData, setEducationData }) {
             className="form"
             style={{
               display: "flex",
-              "flex-direction": "column",
+              flexDirection: "column",
               "align-items": "center",
               height: "80vh",
-              "justify-content": "flex-start",
+              justifyContent: "flex-start",
             }}
           >
             <form action="">
@@ -61,71 +60,257 @@ function UserProfileRegister6({ eduactionData, setEducationData }) {
                     <Col
                       xs="6"
                       className="dynamic-form-headings"
-                      style={{ display: "flex", "justify-content": "center" }}
-                    >
-                      <Button
-                        variant="primary"
-                        onClick={() => handleAddPlayers()}
-                      >
-                        Add Your Certification
-                      </Button>
-                    </Col>
+                      style={{ display: "flex", justifyContent: "center" }}
+                    ></Col>
                     <Col xs="12">
-                      <Form>
+                      <Form style={{ maxHeight: 700, overflowY: "auto" }}>
                         <Row className="justify-content-center">
-                          {allPlayers.length > 0 && (
+                          {userProfileData?.certifications.length > 0 && (
                             <>
-                              {allPlayers.map((field, index) => (
-                                <Col xs="4">
-                                  <div className="add-player-div">
-                                    <h4>Education {index + 1}</h4>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                    >
-                                      <label className="form-label">
-                                        Certification Name
-                                      </label>
-                                      <input
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="degreename"
-                                        style={{ width: "40vw" }}
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                    >
-                                      <label className="form-label">
-                                        Certification description
-                                      </label>
-                                      <textarea
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="fieldstudy"
-                                      />
-                                    </Form.Group>
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                      }}
-                                    >
-                                      <Button
-                                        variant="secondary"
-                                        onClick={() =>
-                                          handleRemovePlayers(index)
-                                        }
+                              {userProfileData?.certifications.map(
+                                (field, index) => (
+                                  <Col xs="4">
+                                    <div className="add-player-div">
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
                                       >
-                                        Cancel
-                                      </Button>
+                                        <h4>Certification {index + 1}</h4>
+                                        <div>
+                                          {index === 0 && (
+                                            <button
+                                              style={{
+                                                backgroundColor: "#FF3769",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                border: 0,
+                                                cursor: "pointer",
+                                                width: 75,
+                                                marginRight: 10,
+                                              }}
+                                              variant="primary"
+                                              onClick={() =>
+                                                addNewCertification()
+                                              }
+                                            >
+                                              <PlusOutlined
+                                                style={{
+                                                  fontSize: "23px",
+                                                  color: "white",
+                                                }}
+                                              />
+                                            </button>
+                                          )}
+                                          {userProfileData?.certifications
+                                            .length > 1 && (
+                                            <Button
+                                              style={{
+                                                backgroundColor: "#FF3769",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                border: 0,
+                                                cursor: "pointer",
+                                                width: 75,
+                                                marginRight: 10,
+                                              }}
+                                              variant="secondary"
+                                              onClick={() =>
+                                                removeCertificationFields(index)
+                                              }
+                                            >
+                                              <DeleteOutlined
+                                                style={{
+                                                  fontSize: "23px",
+                                                  color: "white",
+                                                }}
+                                              />
+                                            </Button>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Certification Name{" "}
+                                        </label>
+                                        <input
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="certificationName"
+                                          value={field.certificationName}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "certifications",
+                                              index,
+                                              "certificationName"
+                                            )
+                                          }
+                                          style={{ width: "40vw" }}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Certification Description{" "}
+                                        </label>
+                                        <input
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="certificationDescription"
+                                          value={field.certificationDescription}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "certifications",
+                                              index,
+                                              "certificationDescription"
+                                            )
+                                          }
+                                          style={{ width: "40vw" }}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+
+                                          marginBottom: "20px",
+                                          gap: 10,
+                                        }}
+                                      >
+                                        <div className="startDate">
+                                          <label className="form-label">
+                                            Obtained At
+                                          </label>
+                                          <DatePicker
+                                            className="form-input"
+                                            name="certificationDate"
+                                            onChange={(date) =>
+                                              handleChange(
+                                                null,
+                                                "certifications",
+                                                index,
+                                                "certificationDate",
+                                                date.toISOString()
+                                              )
+                                            }
+                                            selected={
+                                              new Date(field?.certificationDate)
+                                            }
+                                            dateFormat="dd/MM/yyyy"
+                                          />
+                                        </div>
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <div class="form-check">
+                                          <input
+                                            onChange={(e) =>
+                                              handleChange(
+                                                null,
+                                                "certifications",
+                                                index,
+                                                "doesItExpire",
+                                                e.target.checked
+                                              )
+                                            }
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            value={field.doesItExpire}
+                                            id="flexCheckDefault"
+                                          ></input>
+                                          <label
+                                            class="form-check-label"
+                                            for="flexCheckDefault"
+                                          >
+                                            Does it expire?
+                                          </label>
+                                        </div>
+                                      </Form.Group>
+                                      {field.doesItExpire && (
+                                        <Form.Group
+                                          className="mb-3"
+                                          controlId="formBasicEmail"
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+
+                                            marginBottom: "20px",
+                                            gap: 10,
+                                          }}
+                                        >
+                                          <div className="endDate">
+                                            <label className="form-label">
+                                              Expire At
+                                            </label>
+                                            <DatePicker
+                                              onChange={(date) =>
+                                                handleChange(
+                                                  null,
+                                                  "certifications",
+                                                  index,
+                                                  "expDate",
+                                                  date.toISOString()
+                                                )
+                                              }
+                                              className="form-input"
+                                              name="expDate"
+                                              selected={
+                                                new Date(field?.expDate)
+                                              }
+                                              dateFormat="dd/MM/yyyy"
+                                            />
+                                          </div>
+                                        </Form.Group>
+                                      )}
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Certification Link
+                                        </label>
+                                        <input
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "certifications",
+                                              index,
+                                              "certificationLink"
+                                            )
+                                          }
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="certificationLink"
+                                          value={field.certificationLink}
+                                        />
+                                      </Form.Group>
+
+                                      <Divider style={{ width: "100%" }} />
                                     </div>
-                                  </div>
-                                </Col>
-                              ))}
+                                  </Col>
+                                )
+                              )}
                             </>
                           )}
                         </Row>

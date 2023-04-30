@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@apollo/client": "^3.7.11",
     "@mobiscroll/react-lite": "^4.10.9",
     "antd": "^5.4.6",

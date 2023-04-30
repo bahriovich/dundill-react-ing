@@ -1,7 +1,6 @@
 import { Select } from "antd";
 import React from "react";
 import "./UserProfileRegister3.css";
-import { useState } from "react";
 
 function UserProfileRegister3({
   userProfileData,

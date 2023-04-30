@@ -3,57 +3,42 @@ import { React, useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-// import MUIRichTextEditor from "mui-rte";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Divider } from "antd";
 
 function UserProfileRegister4({
-  signUpProfileData,
-  setSignUpProfileData,
-  professionalExperienceData,
-  setProfessionalExperienceData,
+  userProfileData,
+  setUserProfileData,
+  handleChange,
 }) {
-  const [allPlayers, setAllPlayers] = useState([
-    { name: "", description: "", price: null, rating: null },
-  ]);
-
-  const handleAddPlayers = () => {
-    const values = [...allPlayers];
-    values.push({
-      name: "",
+  function addNewExperience() {
+    let expObject = {
+      companyName: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      stillWorking: false,
+      title: "",
       description: "",
-      price: null,
-      rating: null,
-    });
-    setAllPlayers(values);
-  };
-
-  const handleRemovePlayers = (index) => {
-    const values = [...allPlayers];
-    values.splice(index, 1);
-    setAllPlayers(values);
-  };
-
-  const handleInputChange = (index, event) => {
-    const values = [...allPlayers];
-    const updatedValue = event.target.name;
-    values[index][updatedValue] = event.target.value;
-
-    setAllPlayers(values);
-  };
-
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-  const handleChange = (e, index) => {
-    let value = e.target.value;
-    let name = e.target.name;
-
-    setProfessionalExperienceData((prev) => {
+      duration: "",
+    };
+    setUserProfileData((prev) => {
       let data = { ...prev };
-      data[name][index] = value;
+      data.professionalExperienceData = [
+        ...data.professionalExperienceData,
+        expObject,
+      ];
       return data;
     });
-  };
+  }
+  function removeExpFields(index) {
+    setUserProfileData((prev) => {
+      let data = { ...prev };
 
+      data.professionalExperienceData.splice(index, 1);
+      return data;
+    });
+  }
+  console.log(userProfileData);
   return (
     <>
       <div className="left-side">
@@ -81,209 +66,244 @@ function UserProfileRegister4({
                       xs="6"
                       className="dynamic-form-headings"
                       style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Button
-                        variant="primary"
-                        onClick={() => handleAddPlayers()}
-                      >
-                        Add Professional Experience
-                      </Button>
-                    </Col>
+                    ></Col>
                     <Col xs="12">
-                      <Form>
+                      <Form style={{ maxHeight: 700, overflowY: "auto" }}>
                         <Row className="justify-content-center">
-                          {allPlayers.length > 0 && (
+                          {userProfileData.professionalExperienceData.length >
+                            0 && (
                             <>
-                              {allPlayers.map((field, index) => (
-                                <Col xs="4">
-                                  <div className="add-player-div">
-                                    <h4>Professional Experience {index + 1}</h4>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        Company Name{" "}
-                                      </label>
-                                      <input
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="companyName"
-                                        value={
-                                          professionalExperienceData.companyName
-                                        }
-                                        onChange={(e) => handleChange(e, index)}
-                                        style={{ width: "40vw" }}
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        "align-items": "center",
-                                        justifyContent: "space-around",
-                                        marginBottom: "20px",
-                                      }}
-                                    >
-                                      <div className="startDate">
-                                        <label className="form-label">
-                                          Start Date{" "}
-                                        </label>
-                                        <DatePicker
-                                          name="startDate"
-                                          selected={new Date()}
-                                          onChange={(date) =>
-                                            setProfessionalExperienceData(
-                                              (prev) => {
-                                                let data = { ...prev };
-                                                data.startDate = new Date(
-                                                  date
-                                                ).toISOString();
-                                                return data;
-                                              }
-                                            )
-                                          }
-                                          dateFormat="dd/MM/yyyy"
-                                        />
-
-                                        {/* <DatePicker name="startDate" value={professionalExperienceData.startDate} onChange={(e) => (handleChange(e))} /> */}
-                                      </div>
-                                      <div className="endDate">
-                                        <label className="form-label">
-                                          End Date{" "}
-                                        </label>
-                                        <DatePicker
-                                          name="endDate"
-                                          // selected={new Date(professionalExperienceData?.endDate)}
-                                          onChange={(date) =>
-                                            setProfessionalExperienceData(
-                                              (prev) => {
-                                                let data = { ...prev };
-                                                data.endDate = new Date(
-                                                  date
-                                                ).toISOString();
-                                                return data;
-                                              }
-                                            )
-                                          }
-                                          dateFormat="dd/MM/yyyy"
-                                        />
-                                        {/* <DatePicker name="endDate" value={professionalExperienceData.endDate} onChange={(e) => (handleChange(e))} /> */}
-                                      </div>
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        Still working?
-                                      </label>
-                                      {/* 
-                                                                        <Checkbox
-                                                                            {...label}
-                                                                            defaultChecked
-                                                                            sx={{
-                                                                                color: pink[800],
-                                                                                '&.Mui-checked': {
-                                                                                    color: pink[600],
-                                                                                },
-                                                                            }}
-                                                                            name="stillWorking"
-                                                                            value={professionalExperienceData.stillWorking }
-                                                                            onChange={(e) => (handleChange(e, index))}
-                                                                        /> */}
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        Title{" "}
-                                      </label>
-                                      <input
-                                        required="required"
-                                        className="form-input"
-                                        type="text"
-                                        name="title"
-                                        value={professionalExperienceData.title}
-                                        onChange={(e) => handleChange(e, index)}
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{ marginBottom: "20px" }}
-                                    >
-                                      <label className="form-label">
-                                        Description{" "}
-                                      </label>
-                                      <textarea
-                                        type="text"
-                                        name="description"
-                                        value={
-                                          professionalExperienceData.description
-                                        }
-                                        onChange={(e) => handleChange(e, index)}
+                              {userProfileData.professionalExperienceData.map(
+                                (field, index) => (
+                                  <Col xs="4">
+                                    <div className="add-player-div">
+                                      <div
                                         style={{
-                                          width: "40vw",
-                                          height: "90px",
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
                                         }}
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formBasicEmail"
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        "align-items": "center",
-                                        gap: "50px",
-                                        marginBottom: "20px",
-                                      }}
-                                    >
-                                      <label className="form-label">
-                                        Duration{" "}
-                                      </label>
-                                      {/* <Slider
-                                                                            name="duration"
-                                                                            value={professionalExperienceData.duration}
-                                                                            defaultValue={30}
-                                                                            sx={{
-                                                                                width: 300,
-                                                                                color: 'success.main',
-                                                                                '& .MuiSlider-thumb': {
-                                                                                    borderRadius: '1px',
-                                                                                },
-                                                                            }}
-                                                                            valueLabelDisplay="auto"
-                                                                            style={{ color: "#FF3769" }}
-                                                                            onChange={(e) => (handleChange(e, index))}
-                                                                        /> */}
-                                    </Form.Group>
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                      }}
-                                    >
-                                      <Button
-                                        variant="secondary"
-                                        onClick={() =>
-                                          handleRemovePlayers(index)
-                                        }
                                       >
-                                        Cancel
-                                      </Button>
+                                        <h4>
+                                          Professional Experience {index + 1}
+                                        </h4>
+                                        <div>
+                                          {index === 0 && (
+                                            <button
+                                              style={{
+                                                backgroundColor: "#FF3769",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                border: 0,
+                                                cursor: "pointer",
+                                                width: 75,
+                                                marginRight: 10,
+                                              }}
+                                              variant="primary"
+                                              onClick={() => addNewExperience()}
+                                            >
+                                              <PlusOutlined
+                                                style={{
+                                                  fontSize: "23px",
+                                                  color: "white",
+                                                }}
+                                              />
+                                            </button>
+                                          )}
+                                          {userProfileData
+                                            .professionalExperienceData.length >
+                                            1 && (
+                                            <Button
+                                              style={{
+                                                backgroundColor: "#FF3769",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                border: 0,
+                                                cursor: "pointer",
+                                                width: 75,
+                                                marginRight: 10,
+                                              }}
+                                              variant="secondary"
+                                              onClick={() =>
+                                                removeExpFields(index)
+                                              }
+                                            >
+                                              <DeleteOutlined
+                                                style={{
+                                                  fontSize: "23px",
+                                                  color: "white",
+                                                }}
+                                              />
+                                            </Button>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Company Name{" "}
+                                        </label>
+                                        <input
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="companyName"
+                                          value={field.companyName}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "professionalExperienceData",
+                                              index,
+                                              "companyName"
+                                            )
+                                          }
+                                          style={{ width: "40vw" }}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          "align-items": "center",
+                                          justifyContent: "space-around",
+                                          marginBottom: "20px",
+                                          gap: 10,
+                                        }}
+                                      >
+                                        <div className="startDate">
+                                          <label className="form-label">
+                                            Start Date{" "}
+                                          </label>
+                                          <DatePicker
+                                            className="form-input"
+                                            name="startDate"
+                                            onChange={(date) =>
+                                              handleChange(
+                                                null,
+                                                "professionalExperienceData",
+                                                index,
+                                                "startDate",
+                                                date.toISOString()
+                                              )
+                                            }
+                                            selected={
+                                              new Date(field?.startDate)
+                                            }
+                                            dateFormat="dd/MM/yyyy"
+                                          />
+                                        </div>
+                                        <div className="endDate">
+                                          <label className="form-label">
+                                            End Date{" "}
+                                          </label>
+                                          <DatePicker
+                                            onChange={(date) =>
+                                              handleChange(
+                                                null,
+                                                "professionalExperienceData",
+                                                index,
+                                                "endDate",
+                                                date.toISOString()
+                                              )
+                                            }
+                                            disabled={field.stillWorking}
+                                            className="form-input"
+                                            name="endDate"
+                                            selected={new Date(field?.endDate)}
+                                            dateFormat="dd/MM/yyyy"
+                                          />
+                                        </div>
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <div class="form-check">
+                                          <input
+                                            onChange={(e) =>
+                                              handleChange(
+                                                null,
+                                                "professionalExperienceData",
+                                                index,
+                                                "stillWorking",
+                                                e.target.checked
+                                              )
+                                            }
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            value={field.stillWorking}
+                                            id="flexCheckDefault"
+                                          ></input>
+                                          <label
+                                            class="form-check-label"
+                                            for="flexCheckDefault"
+                                          >
+                                            Still Working
+                                          </label>
+                                        </div>
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Title{" "}
+                                        </label>
+                                        <input
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "professionalExperienceData",
+                                              index,
+                                              "title"
+                                            )
+                                          }
+                                          required="required"
+                                          className="form-input"
+                                          type="text"
+                                          name="title"
+                                          value={field.title}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicEmail"
+                                        style={{ marginBottom: "20px" }}
+                                      >
+                                        <label className="form-label">
+                                          Description{" "}
+                                        </label>
+                                        <textarea
+                                          type="text"
+                                          name="description"
+                                          value={field.description}
+                                          onChange={(e) =>
+                                            handleChange(
+                                              e,
+                                              "professionalExperienceData",
+                                              index,
+                                              "description"
+                                            )
+                                          }
+                                          style={{
+                                            width: "40vw",
+                                            height: "90px",
+                                          }}
+                                        />
+                                      </Form.Group>
+                                      <Divider style={{ width: "100%" }} />
                                     </div>
-                                  </div>
-                                </Col>
-                              ))}
+                                  </Col>
+                                )
+                              )}
                             </>
                           )}
                         </Row>
@@ -291,37 +311,6 @@ function UserProfileRegister4({
                     </Col>
                   </Row>
                 </Container>
-
-                {/* <div className='company_name' >
-                                <input type="text" style={{ "width": "100px" ,"height": "20px" }} />
-                            </div>
-                            <div className='start_end_date'>
-                                <DatePicker />
-                                <DatePicker />
-                            </div>
-                            <div className='still_working'>
-                                <input type="checkbox" />
-                            </div>
-                            <div className='title'>
-                                <input type="text" />
-                            </div>
-                            <div>
-                                <ThemeProvider theme={myTheme}>
-                                    <MUIRichTextEditor label="Start typing..." />
-                                </ThemeProvider>
-                            </div>
-                            <div>
-                                <Slider
-                                    defaultValue={30}
-                                    sx={{
-                                        width: 300,
-                                        color: 'success.main',
-                                        '& .MuiSlider-thumb': {
-                                            borderRadius: '1px',
-                                        },
-                                    }}
-                                />
-                            </div> */}
               </div>
             </form>
           </div>
