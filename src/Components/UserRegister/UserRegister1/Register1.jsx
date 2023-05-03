@@ -1,7 +1,6 @@
 import React from "react";
 import "./Register1.css";
-import Google from "../../../img/google.png";
-import Linkedin from "../../../img/linkedin.png";
+
 import { GoogleLogin } from "react-google-login";
 
 function UserRegister1({ signUpData, setSignUpData }) {
@@ -131,12 +130,6 @@ function UserRegister1({ signUpData, setSignUpData }) {
                     https://www.googleapis.com/auth/user.gender.read
                     https://www.googleapis.com/auth/user.addresses.read"
                 />
-              </div>
-              <div className="signup-button">
-                <button>
-                  <img src={Linkedin} alt="" />
-                  Sign up with Linkedin
-                </button>
               </div>
             </div>
             <div className="line-separator">or</div>

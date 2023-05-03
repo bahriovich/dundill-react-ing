@@ -238,8 +238,7 @@ function UserProfileRegister4({
                                             }
                                             class="form-check-input"
                                             type="checkbox"
-                                            value={field.stillWorking}
-                                            id="flexCheckDefault"
+                                            value={field?.stillWorking}
                                           ></input>
                                           <label
                                             class="form-check-label"

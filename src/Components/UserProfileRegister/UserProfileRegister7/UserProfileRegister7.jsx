@@ -22,8 +22,8 @@ function UserProfileRegister7({
   userProfileData,
   setUserProfileData,
   handleChange,
+  submitted,
 }) {
-  const [submitted, setSubmitted] = useState(true);
   function handleDataChange(e, name, value) {
     const newValue = value ? value : e.target.value;
     setUserProfileData((prev) => {

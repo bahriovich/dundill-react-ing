@@ -1,40 +1,98 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-
-const createUser = gql`
-  mutation createUser($input:CreateUserInput! ) {
-    createUser(input:$input ) {
+export const CREATE_USER = gql`
+  mutation createUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      _id
+      userProfileId
+      phoneNumber
       fullname
-      # email
-      # title
-      # birthDate
-      # gender
-      # country
-      # city
-      # phoneNumber
-      # password
+      email
+      country
+      city
+      title
+      birthDate
+      gender
     }
   }
-`
-
-const updateUserProfile = gql`
-mutation updateUserProfile($input: UpdateUserProfileInput!) {
-  updateUserProfile(input: $input) {
-    role
-    techStack
-  }
-}
-`
-
-const salary = gql`
-    query {
-        salary(_id: "4e281c00-d396-11ed-87e5-712ec78265d9") {
-            mounthlyAmount
-            hourlyAmount
-        }
-    }
 `;
+export const CREATE_USER_PROFILE = gql`
+  mutation createUserPorfile($input: CreateUserProfileInput!) {
+    createUserProfile(input: $input) {
+      _id
+      userId
+      role
+      summary
+      skills
+      professionalExperience
+      education
+      certification
+      commitment
+      availabilityName
+      availabilityStartDate
+      linkedinLink
+      githubLink
+    }
+  }
+`;
+export const CREATE_PROFESSIONAL_EXPERIENCE = gql`
+  mutation createProfessionalExperience(
+    $input: CreateProfessionalExperienceInput!
+  ) {
+    createProfessionalExperience(input: $input) {
+      _id
+      userId
+      userProfileId
+      company
+      startDate
+      endDate
+      stillWorking
+      title
+      description
+    }
+  }
+`;
+export const CREATE_EDUCATION = gql`
+  mutation createEducation($input: CreateEducationInput!) {
+    createEducation(input: $input) {
+      _id
+      userId
+      userProfileId
+      degreeName
+      fieldOfStudy
+      school
+      startDate
+      endDate
+    }
+  }
+`;
+export const CREATE_SKILL = gql`
+  mutation createSkill($input: CreateSkillInput!) {
+    createSkill(input: $input) {
+      _id
+      userId
+      userProfileId
+      name
+      practicalPeriod
 
-// console.log(salary)
-
-export { salary, createUser, updateUserProfile };
+      proficiencyLevelName
+      image
+      releaseYear
+    }
+  }
+`;
+export const CREATE_CERTIFICATION = gql`
+  mutation createCertification($input: CreateCertificationInput!) {
+    createCertification(input: $input) {
+      _id
+      userId
+      userProfileId
+      title
+      description
+      link
+      dateOfObtention
+      doesItExpire
+      expirationDate
+    }
+  }
+`;

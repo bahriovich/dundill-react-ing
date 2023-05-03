@@ -18,9 +18,11 @@ function UserRegister2({ signUpData, setSignUpData }) {
     });
   };
   const changeCheckBox = (e) => {
+    let checked = e.target.checked;
+
     setSignUpData((prev) => {
       let data = { ...prev };
-      data.planningToMove = e.target.checked;
+      data.planningToMove = checked;
       return data;
     });
   };
@@ -77,7 +79,7 @@ function UserRegister2({ signUpData, setSignUpData }) {
                   onChange={(e) => changeCheckBox(e)}
                   class="form-check-input"
                   type="checkbox"
-                  value={signUpData.planningToMove}
+                  value={signUpData?.planningToMove}
                   id="flexCheckDefault"
                 ></input>
                 <label class="form-check-label" for="flexCheckDefault">

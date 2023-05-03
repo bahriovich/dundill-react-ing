@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserRegister from "./Components/UserRegister/UserRegister";
 import UserProfileRegister from "./Components/UserProfileRegister/UserProfileRegister";
 import { gapi } from "gapi-script";
+
 gapi.load("client:auth2", () => {
   gapi.client.init({
     clientId:
@@ -16,8 +17,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<UserRegister />}></Route>
-          <Route path="/apply/aa" element={<UserProfileRegister />} />
-          {/* <Route path="/register1" element={(<SecondRegisterForm />)} /> */}
         </Routes>
       </BrowserRouter>
     </div>
