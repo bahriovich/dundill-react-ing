@@ -11,8 +11,19 @@
   font-size: 36;
   text-align: start;
 
-  border-radius: 13px;
-  padding-left: 12px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+.countrySelect-err {
+  width: 80%;
+  height: 40px;
+  background-color: #fff;
+  color: red;
+  font-size: 36;
+  text-align: start;
+  border-color: red;
+  border-radius: 10px;
+  padding-left: 10px;
 }
 .username-avatar {
   border-radius: 40px;

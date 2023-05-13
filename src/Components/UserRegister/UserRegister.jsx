@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./UserRegister.css";
 import Logo from "../../img/Logo.png";
 import Register1 from "./UserRegister1/Register1";
@@ -14,7 +14,6 @@ function UserRegister() {
     signUpProfileData: {
       role: "",
       techStack: [],
-      professionalExperience: [],
     },
     educationData: [
       {
@@ -55,7 +54,7 @@ function UserRegister() {
       githubUrl: "",
     },
   });
-
+  const [signUpNumber, setSignUpNumber] = useState(0);
   const handleChange = (event, stateKey, index, nestedKey, value) => {
     const newValue = value !== undefined ? value : event.target.value;
     const type = event?.target?.type;
@@ -98,27 +97,70 @@ function UserRegister() {
     title: "",
     planningToMove: false,
   });
-  const steps = [
-    { requiredFields: ["fullname", "email"] },
-    {
-      requiredFields: ["country", "city"],
-    },
-    {
-      requiredFields: ["birthDate", "gender", "phoneNumber"],
-    },
-    {
-      requiredFields: ["title"],
-    },
-  ];
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [isValidStep, setIsValidStep] = useState(false);
 
-  const isStepValid = () => {
+  const isStepValid = useCallback(() => {
+    const steps = [
+      { requiredFields: ["fullname", "email"] },
+      {
+        requiredFields: ["country", "city"],
+      },
+      {
+        requiredFields: ["birthDate", "gender", "phoneNumber"],
+      },
+      {
+        requiredFields: ["title"],
+      },
+    ];
     const requiredFields = steps[signUpNumber].requiredFields;
-    return requiredFields.every((fieldName) => signUpData[fieldName]);
-  };
-  const [signUpNumber, setSignUpNumber] = useState(0);
+    const errors = {};
+    let isValid = true;
+
+    requiredFields.forEach((fieldName) => {
+      switch (fieldName) {
+        case "email":
+          if (!signUpData[fieldName]) {
+            errors[fieldName] = "Field is required";
+            isValid = false;
+          } else if (!/\S+@\S+\.\S+/.test(signUpData[fieldName])) {
+            errors[fieldName] = "Invalid email address";
+            isValid = false;
+          }
+          break;
+        case "birthDate":
+          // Validate age
+          const currentDate = new Date();
+          const userBirthDate = new Date(signUpData.birthDate);
+          const ageDiff = currentDate.getTime() - userBirthDate.getTime();
+          const ageDate = new Date(ageDiff);
+          const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+          if (calculatedAge < 18) {
+            errors[fieldName] = "Age must be greater than 18";
+            isValid = false;
+          }
+          break;
+
+        default:
+          if (!signUpData[fieldName]) {
+            errors[fieldName] = "Field is required";
+            isValid = false;
+          }
+        // Add more validations for other fields if needed
+      }
+    });
+
+    setFieldErrors(errors);
+    setIsValidStep(isValid);
+  }, [signUpData, signUpNumber]);
+
+  useEffect(() => {
+    isStepValid();
+  }, [isStepValid]);
 
   const handleClick = () => {
-    if (isStepValid()) {
+    if (isValidStep) {
       setSignUpNumber(signUpNumber + 1);
     }
   };
@@ -131,23 +173,43 @@ function UserRegister() {
     switch (signUpNumber) {
       case 0:
         return (
-          <Register1 signUpData={signUpData} setSignUpData={setSignUpData} />
+          <Register1
+            signUpData={signUpData}
+            setSignUpData={setSignUpData}
+            fieldErrors={fieldErrors}
+          />
         );
       case 1:
         return (
-          <Register2 signUpData={signUpData} setSignUpData={setSignUpData} />
+          <Register2
+            signUpData={signUpData}
+            setSignUpData={setSignUpData}
+            fieldErrors={fieldErrors}
+          />
         );
       case 2:
         return (
-          <Register3 signUpData={signUpData} setSignUpData={setSignUpData} />
+          <Register3
+            signUpData={signUpData}
+            setSignUpData={setSignUpData}
+            fieldErrors={fieldErrors}
+          />
         );
       case 3:
         return (
-          <Register4 signUpData={signUpData} setSignUpData={setSignUpData} />
+          <Register4
+            signUpData={signUpData}
+            setSignUpData={setSignUpData}
+            fieldErrors={fieldErrors}
+          />
         );
       default:
         return (
-          <Register1 signUpData={signUpData} setSignUpData={setSignUpData} />
+          <Register1
+            signUpData={signUpData}
+            setSignUpData={setSignUpData}
+            fieldErrors={fieldErrors}
+          />
         );
     }
   };
@@ -155,7 +217,7 @@ function UserRegister() {
   const formSubmit = () => {
     setUserProfile(true);
   };
-
+  console.log(fieldErrors);
   return (
     <>
       {userProfile ? (
@@ -177,7 +239,7 @@ function UserRegister() {
             <div className="form-next-button">
               <button
                 style={
-                  !isStepValid()
+                  !isValidStep
                     ? {
                         cursor: "pointer",
                         background: "gray",
@@ -187,7 +249,7 @@ function UserRegister() {
                         cursor: "pointer",
                       }
                 }
-                disabled={!isStepValid()}
+                disabled={!isValidStep}
                 onClick={handleClick}
               >
                 Next
@@ -205,7 +267,7 @@ function UserRegister() {
             <div className="form-next-button">
               <button
                 style={
-                  !isStepValid()
+                  !isValidStep
                     ? {
                         cursor: "pointer",
                         background: "gray",
@@ -215,7 +277,7 @@ function UserRegister() {
                         cursor: "pointer",
                       }
                 }
-                disabled={!isStepValid()}
+                disabled={!isValidStep}
                 type="button"
                 onClick={formSubmit}
               >

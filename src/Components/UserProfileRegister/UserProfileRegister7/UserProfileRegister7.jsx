@@ -23,6 +23,7 @@ function UserProfileRegister7({
   setUserProfileData,
   handleChange,
   submitted,
+  fieldErrors,
 }) {
   function handleDataChange(e, name, value) {
     const newValue = value ? value : e.target.value;
@@ -33,6 +34,7 @@ function UserProfileRegister7({
       return data;
     });
   }
+  console.log(fieldErrors);
   const description = "This is a description.";
   return (
     <>
@@ -98,37 +100,100 @@ function UserProfileRegister7({
               >
                 <form action="">
                   <div>
+                    <div style={{ marginBottom: "20px" }}>
+                      <label
+                        style={
+                          fieldErrors[`profileSummary.commitment`] && {
+                            color: "red",
+                          }
+                        }
+                        className="form-label"
+                      >
+                        Commitment
+                      </label>
+
+                      <Select
+                        styles={{
+                          control: (baseStyles, state) => ({
+                            ...baseStyles,
+                            borderColor:
+                              fieldErrors[`profileSummary.commitment`] && "red",
+                          }),
+                        }}
+                        onChange={(val) =>
+                          handleDataChange(null, "commitment", val.value)
+                        }
+                        options={commitment_options}
+                      />
+
+                      {fieldErrors[`profileSummary.commitment`] && (
+                        <span style={{ color: "red" }}>
+                          {fieldErrors[`profileSummary.commitment`]}
+                        </span>
+                      )}
+                    </div>
                     <div style={{ marginBottom: "20px", marginTop: 40 }}>
-                      <label className="form-label">Profile summary</label>
+                      <label
+                        style={
+                          fieldErrors[`profileSummary.profile`] && {
+                            color: "red",
+                          }
+                        }
+                        className="form-label"
+                      >
+                        Summary
+                      </label>
                       <textarea
-                        rows={5}
-                        required="required"
+                        style={
+                          fieldErrors[`profileSummary.profile`] && {
+                            backgroundImage:
+                              "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                          }
+                        }
+                        rows={3}
                         className="form-input"
                         type="text"
                         name="summary"
                         onChange={(e) => handleDataChange(e, "profile", null)}
                       />
+                      {fieldErrors[`profileSummary.profile`] && (
+                        <span style={{ color: "red" }}>
+                          {fieldErrors[`profileSummary.profile`]}
+                        </span>
+                      )}
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                      <label className="form-label">Commitment</label>
-                      <Select
-                        onChange={(val) =>
-                          handleDataChange(null, "commitment", val.value)
+                      <label
+                        style={
+                          fieldErrors[`profileSummary.availability`] && {
+                            color: "red",
+                          }
                         }
-                        options={commitment_options}
-                        style={{ width: "130px" }}
-                      />
-                    </div>
-                    <div style={{ marginBottom: "20px" }}>
-                      <label className="form-label">availability</label>
+                        className="form-label"
+                      >
+                        Availability
+                      </label>
                       <Select
+                        styles={{
+                          control: (baseStyles, state) => ({
+                            ...baseStyles,
+                            borderColor:
+                              fieldErrors[`profileSummary.availability`] &&
+                              "red",
+                          }),
+                        }}
                         onChange={(val) =>
                           handleDataChange(null, "availability", val.value)
                         }
                         options={availability_options}
-                        style={{ width: "130px" }}
                       />
+                      {fieldErrors[`profileSummary.availability`] && (
+                        <span style={{ color: "red" }}>
+                          {fieldErrors[`profileSummary.availability`]}
+                        </span>
+                      )}
                     </div>
+
                     <div
                       style={{
                         marginBottom: "20px",
@@ -138,11 +203,22 @@ function UserProfileRegister7({
                         "flex-direction": "column",
                       }}
                     >
-                      <label className="form-label">
-                        availability start date
+                      <label
+                        style={
+                          fieldErrors[`profileSummary.availabilityDate`] && {
+                            color: "red",
+                          }
+                        }
+                        className="form-label"
+                      >
+                        Availability start date
                       </label>
                       <DatePicker
-                        className="form-input"
+                        className={
+                          fieldErrors[`profileSummary.availabilityDate`]
+                            ? "form-input-err"
+                            : "form-input"
+                        }
                         name="certificationDate"
                         onChange={(date) =>
                           handleChange(
@@ -150,34 +226,56 @@ function UserProfileRegister7({
                             "profileSummary",
                             null,
                             "availabilityDate",
-                            date.toISOString()
+                            date && date?.toISOString()
                           )
                         }
                         selected={
                           new Date(
-                            userProfileData.profileSummary.availabilityDate
+                            userProfileData?.profileSummary?.availabilityDate
                           )
                         }
                         dateFormat="dd/MM/yyyy"
                       />
+                      {fieldErrors[`profileSummary.availabilityDate`] && (
+                        <span style={{ color: "red" }}>
+                          {fieldErrors[`profileSummary.availabilityDate`]}
+                        </span>
+                      )}
                     </div>
                     <div style={{ marginBottom: "20px" }}>
-                      <label className="form-label">
-                        link for LinkedIn account
+                      <label
+                        style={
+                          fieldErrors[`profileSummary.linkedInUrl`] && {
+                            color: "red",
+                          }
+                        }
+                        className="form-label"
+                      >
+                        Link for LinkedIn account
                       </label>
                       <input
+                        style={
+                          fieldErrors[`profileSummary.linkedInUrl`] && {
+                            backgroundImage:
+                              "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                          }
+                        }
                         onChange={(e) =>
                           handleDataChange(e, "linkedInUrl", null)
                         }
                         className="form-input"
                         type="text"
                         name="degreename"
-                        style={{ width: "40vw" }}
                       />
+                      {fieldErrors[`profileSummary.linkedInUrl`] && (
+                        <span style={{ color: "red" }}>
+                          {fieldErrors[`profileSummary.linkedInUrl`]}
+                        </span>
+                      )}
                     </div>
                     <div style={{ marginBottom: "20px" }}>
                       <label className="form-label">
-                        link for github account
+                        Link for github account
                       </label>
                       <input
                         onChange={(e) => handleDataChange(e, "githubUrl", null)}

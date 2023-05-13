@@ -10,6 +10,7 @@ function UserProfileRegister6({
   userProfileData,
   setUserProfileData,
   handleChange,
+  fieldErrors,
 }) {
   function addNewCertification() {
     let expObject = {
@@ -33,7 +34,7 @@ function UserProfileRegister6({
       return data;
     });
   }
-  console.log(userProfileData);
+  console.log(fieldErrors);
   return (
     <>
       <div className="left-side">
@@ -81,30 +82,32 @@ function UserProfileRegister6({
                                       >
                                         <h4>Certification {index + 1}</h4>
                                         <div>
-                                          {index === 0 && (
-                                            <button
-                                              style={{
-                                                backgroundColor: "#FF3769",
-                                                borderRadius: 10,
-                                                padding: 10,
-                                                border: 0,
-                                                cursor: "pointer",
-                                                width: 75,
-                                                marginRight: 10,
-                                              }}
-                                              variant="primary"
-                                              onClick={() =>
-                                                addNewCertification()
-                                              }
-                                            >
-                                              <PlusOutlined
+                                          {index === 0 &&
+                                            !Object.keys(fieldErrors).length >
+                                              0 && (
+                                              <button
                                                 style={{
-                                                  fontSize: "23px",
-                                                  color: "white",
+                                                  backgroundColor: "#FF3769",
+                                                  borderRadius: 10,
+                                                  padding: 10,
+                                                  border: 0,
+                                                  cursor: "pointer",
+                                                  width: 75,
+                                                  marginRight: 10,
                                                 }}
-                                              />
-                                            </button>
-                                          )}
+                                                variant="primary"
+                                                onClick={() =>
+                                                  addNewCertification()
+                                                }
+                                              >
+                                                <PlusOutlined
+                                                  style={{
+                                                    fontSize: "23px",
+                                                    color: "white",
+                                                  }}
+                                                />
+                                              </button>
+                                            )}
                                           {userProfileData?.certifications
                                             .length > 1 && (
                                             <Button
@@ -137,11 +140,27 @@ function UserProfileRegister6({
                                         controlId="formBasicEmail"
                                         style={{ marginBottom: "20px" }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          style={
+                                            fieldErrors[
+                                              `certifications[${index}].certificationName`
+                                            ] && {
+                                              color: "red",
+                                            }
+                                          }
+                                          className="form-label"
+                                        >
                                           Certification Name{" "}
                                         </label>
                                         <input
-                                          required="required"
+                                          style={
+                                            fieldErrors[
+                                              `certifications[${index}].certificationName`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           className="form-input"
                                           type="text"
                                           name="certificationName"
@@ -154,19 +173,45 @@ function UserProfileRegister6({
                                               "certificationName"
                                             )
                                           }
-                                          style={{ width: "40vw" }}
                                         />
+                                        {fieldErrors[
+                                          `certifications[${index}].certificationName`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `certifications[${index}].certificationName`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicEmail"
                                         style={{ marginBottom: "20px" }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          style={
+                                            fieldErrors[
+                                              `certifications[${index}].certificationDescription`
+                                            ] && {
+                                              color: "red",
+                                            }
+                                          }
+                                          className="form-label"
+                                        >
                                           Certification Description{" "}
                                         </label>
                                         <input
-                                          required="required"
+                                          style={
+                                            fieldErrors[
+                                              `certifications[${index}].certificationDescription`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           className="form-input"
                                           type="text"
                                           name="certificationDescription"
@@ -179,8 +224,18 @@ function UserProfileRegister6({
                                               "certificationDescription"
                                             )
                                           }
-                                          style={{ width: "40vw" }}
                                         />
+                                        {fieldErrors[
+                                          `certifications[${index}].certificationDescription`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `certifications[${index}].certificationDescription`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"

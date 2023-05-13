@@ -23,7 +23,7 @@ function UserProfileRegister1({
     { value: "FULLSTACK(FE-heavy)", label: "FULLSTACK(FE-heavy)" },
     { value: "FULLSTACK", label: "FULLSTACK" },
   ];
-  console.log(userProfileData);
+
   return (
     <>
       <div className="left-side">

@@ -3,7 +3,7 @@ import "./Register1.css";
 
 import { GoogleLogin } from "react-google-login";
 
-function UserRegister1({ signUpData, setSignUpData }) {
+function UserRegister1({ signUpData, setSignUpData, fieldErrors }) {
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
@@ -117,7 +117,7 @@ function UserRegister1({ signUpData, setSignUpData }) {
           <div className="form">
             <h1>Let's get started</h1>
             <div className="signup-buttons">
-              <div className="signup-button">
+              {/* <div className="signup-button">
                 <GoogleLogin
                   clientId="735872497830-brt36pujgllrac6js688mtt6simebkio.apps.googleusercontent.com"
                   buttonText="Sign in with Google"
@@ -130,32 +130,60 @@ function UserRegister1({ signUpData, setSignUpData }) {
                     https://www.googleapis.com/auth/user.gender.read
                     https://www.googleapis.com/auth/user.addresses.read"
                 />
-              </div>
+              </div> */}
             </div>
-            <div className="line-separator">or</div>
+            <div className="line-separator"></div>
             <p>Use your Email Adress</p>
             <form>
               <div className="form-group">
-                <label className="form-label">Fullname </label>
+                <label
+                  style={fieldErrors["fullname"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Fullname{" "}
+                </label>
                 <input
-                  required="required"
+                  style={
+                    fieldErrors[`fullname`] && {
+                      backgroundImage:
+                        "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                    }
+                  }
                   className="form-input"
                   type="text"
                   name="fullname"
                   value={signUpData.fullname}
                   onChange={(e) => handleChange(e)}
                 />
+                {fieldErrors[`fullname`] && (
+                  <span style={{ color: "red" }}>
+                    {fieldErrors[`fullname`]}
+                  </span>
+                )}
               </div>
               <div className="form-group">
-                <label className="form-label">Email </label>
+                <label
+                  style={fieldErrors["email"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Email{" "}
+                </label>
                 <input
-                  required="required"
+                  style={
+                    fieldErrors[`email`] && {
+                      backgroundImage:
+                        "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                    }
+                  }
                   className="form-input"
                   type="email"
                   name="email"
                   value={signUpData.email}
                   onChange={(e) => handleChange(e)}
                 />
+                {fieldErrors[`email`] && (
+                  <span style={{ color: "red" }}>{fieldErrors[`email`]}</span>
+                )}
               </div>
             </form>
           </div>

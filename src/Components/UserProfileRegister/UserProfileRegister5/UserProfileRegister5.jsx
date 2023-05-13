@@ -10,6 +10,7 @@ function UserProfileRegister5({
   userProfileData,
   setUserProfileData,
   handleChange,
+  fieldErrors,
 }) {
   function addNewEducation() {
     let eduObject = {
@@ -33,7 +34,7 @@ function UserProfileRegister5({
       return data;
     });
   }
-
+  console.log(fieldErrors);
   return (
     <>
       <div className="left-side">
@@ -81,28 +82,32 @@ function UserProfileRegister5({
                                       >
                                         <h4>Education {index + 1}</h4>
                                         <div>
-                                          {index === 0 && (
-                                            <button
-                                              style={{
-                                                backgroundColor: "#FF3769",
-                                                borderRadius: 10,
-                                                padding: 10,
-                                                border: 0,
-                                                cursor: "pointer",
-                                                width: 75,
-                                                marginRight: 10,
-                                              }}
-                                              variant="primary"
-                                              onClick={() => addNewEducation()}
-                                            >
-                                              <PlusOutlined
+                                          {index === 0 &&
+                                            !Object.keys(fieldErrors).length >
+                                              0 && (
+                                              <button
                                                 style={{
-                                                  fontSize: "23px",
-                                                  color: "white",
+                                                  backgroundColor: "#FF3769",
+                                                  borderRadius: 10,
+                                                  padding: 10,
+                                                  border: 0,
+                                                  cursor: "pointer",
+                                                  width: 75,
+                                                  marginRight: 10,
                                                 }}
-                                              />
-                                            </button>
-                                          )}
+                                                variant="primary"
+                                                onClick={() =>
+                                                  addNewEducation()
+                                                }
+                                              >
+                                                <PlusOutlined
+                                                  style={{
+                                                    fontSize: "23px",
+                                                    color: "white",
+                                                  }}
+                                                />
+                                              </button>
+                                            )}
                                           {userProfileData.educationData
                                             .length > 1 && (
                                             <Button
@@ -135,12 +140,29 @@ function UserProfileRegister5({
                                         controlId="formBasicEmail"
                                         style={{ marginBottom: "20px" }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          style={
+                                            fieldErrors[
+                                              `educationData[${index}].degreeName`
+                                            ] && {
+                                              color: "red",
+                                            }
+                                          }
+                                          className="form-label"
+                                        >
                                           Degree Name{" "}
                                         </label>
                                         <input
                                           required="required"
                                           className="form-input"
+                                          style={
+                                            fieldErrors[
+                                              `educationData[${index}].degreeName`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           type="text"
                                           name="degreeName"
                                           value={field.degreeName}
@@ -152,19 +174,45 @@ function UserProfileRegister5({
                                               "degreeName"
                                             )
                                           }
-                                          style={{ width: "40vw" }}
                                         />
+                                        {fieldErrors[
+                                          `educationData[${index}].degreeName`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `educationData[${index}].degreeName`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicEmail"
                                         style={{ marginBottom: "20px" }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          style={
+                                            fieldErrors[
+                                              `educationData[${index}].fieldOfStudy`
+                                            ] && {
+                                              color: "red",
+                                            }
+                                          }
+                                          className="form-label"
+                                        >
                                           Field Of Study{" "}
                                         </label>
                                         <input
-                                          required="required"
+                                          style={
+                                            fieldErrors[
+                                              `educationData[${index}].fieldOfStudy`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           className="form-input"
                                           type="text"
                                           name="fieldOfStudy"
@@ -177,19 +225,45 @@ function UserProfileRegister5({
                                               "fieldOfStudy"
                                             )
                                           }
-                                          style={{ width: "40vw" }}
                                         />
+                                        {fieldErrors[
+                                          `educationData[${index}].fieldOfStudy`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `educationData[${index}].fieldOfStudy`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicEmail"
                                         style={{ marginBottom: "20px" }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          style={
+                                            fieldErrors[
+                                              `educationData[${index}].school`
+                                            ] && {
+                                              color: "red",
+                                            }
+                                          }
+                                          className="form-label"
+                                        >
                                           School{" "}
                                         </label>
                                         <input
-                                          required="required"
+                                          style={
+                                            fieldErrors[
+                                              `educationData[${index}].school`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           className="form-input"
                                           type="text"
                                           name="school"
@@ -202,8 +276,18 @@ function UserProfileRegister5({
                                               "school"
                                             )
                                           }
-                                          style={{ width: "40vw" }}
                                         />
+                                        {fieldErrors[
+                                          `educationData[${index}].school`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `educationData[${index}].school`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"
@@ -213,16 +297,31 @@ function UserProfileRegister5({
                                           flexDirection: "row",
                                           "align-items": "center",
                                           justifyContent: "space-around",
-                                          marginBottom: "20px",
+                                          marginBottom: "10px",
                                           gap: 10,
                                         }}
                                       >
                                         <div className="startDate">
-                                          <label className="form-label">
+                                          <label
+                                            style={
+                                              fieldErrors[
+                                                `educationData[${index}].startDate`
+                                              ] && {
+                                                color: "red",
+                                              }
+                                            }
+                                            className="form-label"
+                                          >
                                             Start Date{" "}
                                           </label>
                                           <DatePicker
-                                            className="form-input"
+                                            className={
+                                              fieldErrors[
+                                                `educationData[${index}].startDate`
+                                              ]
+                                                ? "form-input-err"
+                                                : "form-input"
+                                            }
                                             name="startDate"
                                             onChange={(date) =>
                                               handleChange(
@@ -240,7 +339,16 @@ function UserProfileRegister5({
                                           />
                                         </div>
                                         <div className="endDate">
-                                          <label className="form-label">
+                                          <label
+                                            style={
+                                              fieldErrors[
+                                                `educationData[${index}].startDate`
+                                              ] && {
+                                                color: "red",
+                                              }
+                                            }
+                                            className="form-label"
+                                          >
                                             End Date{" "}
                                           </label>
                                           <DatePicker
@@ -253,14 +361,30 @@ function UserProfileRegister5({
                                                 date.toISOString()
                                               )
                                             }
-                                            className="form-input"
+                                            className={
+                                              fieldErrors[
+                                                `educationData[${index}].startDate`
+                                              ]
+                                                ? "form-input-err"
+                                                : "form-input"
+                                            }
                                             name="endDate"
                                             selected={new Date(field?.endDate)}
                                             dateFormat="dd/MM/yyyy"
                                           />
                                         </div>
                                       </Form.Group>
-
+                                      {fieldErrors[
+                                        `educationData[${index}].startDate`
+                                      ] && (
+                                        <span style={{ color: "red" }}>
+                                          {
+                                            fieldErrors[
+                                              `educationData[${index}].startDate`
+                                            ]
+                                          }
+                                        </span>
+                                      )}
                                       <Divider style={{ width: "100%" }} />
                                     </div>
                                   </Col>

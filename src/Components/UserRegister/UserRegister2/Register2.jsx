@@ -2,7 +2,7 @@ import React from "react";
 import "./Register2.css";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
-function UserRegister2({ signUpData, setSignUpData }) {
+function UserRegister2({ signUpData, setSignUpData, fieldErrors }) {
   const selectCountry = (val) => {
     setSignUpData((prev) => {
       let data = { ...prev };
@@ -49,21 +49,41 @@ function UserRegister2({ signUpData, setSignUpData }) {
                 style={{ display: "flex", flexDirection: "column", gap: 20 }}
               >
                 {/* <input required="required" className="form-control" name="country" value={signUpData.country} onChange={(e) => handleChange(e)} /> */}
-                <label className="form-label">Country </label>
+                <label
+                  style={fieldErrors["country"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Country{" "}
+                </label>
                 {/* <CountryDropdown  style={{border: "none"}} id="UNIQUE_ID" className='YOUR_CSS_CLASS ' preferredCountries={['tn', 'us']}  value="" handleChange={e => console.log(e.target.value)}></CountryDropdown> */}
                 <CountryDropdown
                   defaultOptionLabel="Select a country..."
                   value={signUpData.country}
                   name={"country"}
                   onChange={selectCountry}
-                  className={"countrySelect"}
+                  className={
+                    fieldErrors["country"]
+                      ? "countrySelect-err"
+                      : "countrySelect"
+                  }
                 />
+                {fieldErrors["country"] && (
+                  <span style={{ color: "red" }}>
+                    {" "}
+                    {fieldErrors["country"]}{" "}
+                  </span>
+                )}
               </div>
               <div
                 className="form-group"
                 style={{ display: "flex", flexDirection: "column", gap: 20 }}
               >
-                <label className="form-label">City </label>
+                <label
+                  style={fieldErrors["city"] && { color: "red" }}
+                  className="form-label"
+                >
+                  City{" "}
+                </label>
                 <RegionDropdown
                   blankOptionLabel="No country selected..."
                   defaultOptionLabel="Now select a region..."
@@ -71,8 +91,13 @@ function UserRegister2({ signUpData, setSignUpData }) {
                   value={signUpData.city}
                   name={"city"}
                   onChange={selectRegion}
-                  className={"countrySelect"}
+                  className={
+                    fieldErrors["city"] ? "countrySelect-err" : "countrySelect"
+                  }
                 />
+                {fieldErrors["city"] && (
+                  <span style={{ color: "red" }}> {fieldErrors["city"]} </span>
+                )}
               </div>
               <div class="form-check">
                 <input

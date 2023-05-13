@@ -2,8 +2,12 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
-
-const UserRegister3 = ({ signUpData, setSignUpData }) => {
+import { findFlagUrlByCountryName } from "country-flags-svg";
+import { countries } from "country-data";
+import { useEffect } from "react";
+import { useState } from "react";
+const UserRegister3 = ({ signUpData, setSignUpData, fieldErrors }) => {
+  const [countryParam, setCountryParams] = useState();
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
@@ -27,7 +31,33 @@ const UserRegister3 = ({ signUpData, setSignUpData }) => {
       return data;
     });
   };
-  console.log(signUpData);
+  const getCountryData = (countryName) => {
+    const country = countries.all.find(
+      (c) => c.name.toLowerCase() === countryName.toLowerCase()
+    );
+    if (country) {
+      const iso2 = country.alpha2;
+      const dialCode = `+${country.countryCallingCodes[0]}`;
+      const flag = findFlagUrlByCountryName(countryName);
+      return {
+        iso2,
+        dialCode,
+        flag,
+      };
+    }
+    return {
+      iso2: "",
+      dialCode: "",
+      flag: "",
+    };
+  };
+  useEffect(() => {
+    if (signUpData.country) {
+      setCountryParams(getCountryData(signUpData.country));
+    }
+  }, [signUpData.country]);
+  console.log(countryParam);
+
   return (
     <>
       <div className="left-side">
@@ -40,10 +70,17 @@ const UserRegister3 = ({ signUpData, setSignUpData }) => {
           <div className="form">
             <form action="">
               <div className="form-group">
-                <label className="form-label">Birthdate </label>
+                <label
+                  style={fieldErrors["birthDate"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Birthdate{" "}
+                </label>
                 <DatePicker
                   name="birthDate"
-                  className="form-input"
+                  className={
+                    fieldErrors["birthDate"] ? "form-input-err" : "form-input"
+                  }
                   selected={new Date(signUpData?.birthDate)}
                   onChange={(date) =>
                     setSignUpData((prev) => {
@@ -54,12 +91,26 @@ const UserRegister3 = ({ signUpData, setSignUpData }) => {
                   }
                   dateFormat="dd/MM/yyyy"
                 />
+                {fieldErrors[`birthDate`] && (
+                  <span style={{ color: "red" }}>
+                    {fieldErrors[`birthDate`]}
+                  </span>
+                )}
               </div>
               <div className="form-group">
-                <label className="form-label">Gender </label>
+                <label
+                  style={fieldErrors["gender"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Gender{" "}
+                </label>
                 <Select
-                  className="form-input"
-                  required="required"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: fieldErrors[`gender`] && "red",
+                    }),
+                  }}
                   name="gender"
                   value={
                     signUpData.gender !== ""
@@ -72,18 +123,54 @@ const UserRegister3 = ({ signUpData, setSignUpData }) => {
                   options={options}
                   onChange={changeHandler}
                 />
+                {fieldErrors[`gender`] && (
+                  <span style={{ color: "red" }}>{fieldErrors[`gender`]}</span>
+                )}
               </div>
               <div className="form-group">
-                <label className="form-label">Phone Number </label>
-                <input
-                  required="required"
-                  className="form-input"
-                  name="phoneNumber"
-                  value={signUpData.phoneNumber}
-                  onChange={(e) => {
-                    handleChange(e);
+                <label
+                  style={fieldErrors["phoneNumber"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Phone Number{" "}
+                </label>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
-                />
+                >
+                  <img
+                    src={countryParam?.flag}
+                    alt="flag"
+                    style={{ width: 35, height: 22, paddingRight: 5 }}
+                  />
+                  <span style={{ paddingRight: 10 }}>
+                    {countryParam?.dialCode}
+                  </span>
+                  <input
+                    style={
+                      fieldErrors[`phoneNumber`] && {
+                        backgroundImage:
+                          "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                      }
+                    }
+                    className="form-input"
+                    name="phoneNumber"
+                    value={signUpData.phoneNumber}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  />
+                </div>
+                {fieldErrors[`phoneNumber`] && (
+                  <span style={{ color: "red" }}>
+                    {fieldErrors[`phoneNumber`]}
+                  </span>
+                )}
               </div>
             </form>
           </div>

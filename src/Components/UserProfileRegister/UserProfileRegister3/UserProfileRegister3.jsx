@@ -8,10 +8,10 @@ function UserProfileRegister3({
   handleChange,
 }) {
   const options = [
-    { value: "AWARE", label: "aware" },
-    { value: "EXPERIENCED", label: "experienced" },
-    { value: "PROFESSIONAL", label: "professional" },
-    { value: "EXPERT", label: "expert" },
+    { value: "AWARE", label: "Aware" },
+    { value: "EXPERIENCED", label: "Experienced" },
+    { value: "PROFESSIONAL", label: "Professional" },
+    { value: "EXPERT", label: "Expert" },
   ];
   function handleDataChange(e, index, name, value) {
     const newValue = value !== undefined ? value : e.target.value;
@@ -70,7 +70,7 @@ function UserProfileRegister3({
                           options={options}
                           name="proficiencyLevelName"
                           style={{ width: "130px" }}
-                          defaultValue={"aware"}
+                          defaultValue={"Aware"}
                         />
                       </div>
                     </div>

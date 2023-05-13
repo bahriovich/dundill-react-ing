@@ -8,11 +8,12 @@ function UserProfileRegister2({
   handleChange,
 }) {
   const filteredSkills = techData.filter((skill) => {
-    return skill.skill_stacks.some(
-      (stack) =>
-        stack.name.toLocaleLowerCase() ===
-        userProfileData.signUpProfileData.role.toLocaleLowerCase()
-    );
+    return skill.skill_stacks.some((stack) => {
+      return userProfileData.signUpProfileData.role.startsWith("FULLSTACK")
+        ? stack.name.toLowerCase() === "fullstack"
+        : stack.name.toLocaleLowerCase() ===
+            userProfileData.signUpProfileData.role.toLocaleLowerCase();
+    });
   });
 
   const techStack = filteredSkills.map((elem) => ({
@@ -25,7 +26,7 @@ function UserProfileRegister2({
     let teckData = selectedOption.map((el) => ({
       ...el,
       practicalPeriod: "",
-      proficiencyLevelName: "",
+      proficiencyLevelName: "AWARE",
     }));
 
     handleChange(null, "signUpProfileData", 0, "techStack", teckData);

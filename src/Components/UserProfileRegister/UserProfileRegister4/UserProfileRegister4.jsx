@@ -10,6 +10,7 @@ function UserProfileRegister4({
   userProfileData,
   setUserProfileData,
   handleChange,
+  fieldErrors,
 }) {
   function addNewExperience() {
     let expObject = {
@@ -38,7 +39,7 @@ function UserProfileRegister4({
       return data;
     });
   }
-  console.log(userProfileData);
+  console.log(fieldErrors);
   return (
     <>
       <div className="left-side">
@@ -89,28 +90,32 @@ function UserProfileRegister4({
                                           Professional Experience {index + 1}
                                         </h4>
                                         <div>
-                                          {index === 0 && (
-                                            <button
-                                              style={{
-                                                backgroundColor: "#FF3769",
-                                                borderRadius: 10,
-                                                padding: 10,
-                                                border: 0,
-                                                cursor: "pointer",
-                                                width: 75,
-                                                marginRight: 10,
-                                              }}
-                                              variant="primary"
-                                              onClick={() => addNewExperience()}
-                                            >
-                                              <PlusOutlined
+                                          {index === 0 &&
+                                            !Object.keys(fieldErrors).length >
+                                              0 && (
+                                              <button
                                                 style={{
-                                                  fontSize: "23px",
-                                                  color: "white",
+                                                  backgroundColor: "#FF3769",
+                                                  borderRadius: 10,
+                                                  padding: 10,
+                                                  border: 0,
+                                                  cursor: "pointer",
+                                                  width: 75,
+                                                  marginRight: 10,
                                                 }}
-                                              />
-                                            </button>
-                                          )}
+                                                variant="primary"
+                                                onClick={() =>
+                                                  addNewExperience()
+                                                }
+                                              >
+                                                <PlusOutlined
+                                                  style={{
+                                                    fontSize: "23px",
+                                                    color: "white",
+                                                  }}
+                                                />
+                                              </button>
+                                            )}
                                           {userProfileData
                                             .professionalExperienceData.length >
                                             1 && (
@@ -142,13 +147,29 @@ function UserProfileRegister4({
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicEmail"
-                                        style={{ marginBottom: "20px" }}
+                                        style={{
+                                          marginBottom: "20px",
+                                        }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          className="form-label"
+                                          style={
+                                            fieldErrors[
+                                              `professionalExperienceData[${index}].companyName`
+                                            ] && { color: "red" }
+                                          }
+                                        >
                                           Company Name{" "}
                                         </label>
                                         <input
-                                          required="required"
+                                          style={
+                                            fieldErrors[
+                                              `professionalExperienceData[${index}].companyName`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           className="form-input"
                                           type="text"
                                           name="companyName"
@@ -161,8 +182,18 @@ function UserProfileRegister4({
                                               "companyName"
                                             )
                                           }
-                                          style={{ width: "40vw" }}
                                         />
+                                        {fieldErrors[
+                                          `professionalExperienceData[${index}].companyName`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `professionalExperienceData[${index}].companyName`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"
@@ -172,16 +203,29 @@ function UserProfileRegister4({
                                           flexDirection: "row",
                                           "align-items": "center",
                                           justifyContent: "space-around",
-                                          marginBottom: "20px",
+                                          marginBottom: "10px",
                                           gap: 10,
                                         }}
                                       >
                                         <div className="startDate">
-                                          <label className="form-label">
+                                          <label
+                                            style={
+                                              fieldErrors[
+                                                `professionalExperienceData[${index}].startDate`
+                                              ] && { color: "red" }
+                                            }
+                                            className="form-label"
+                                          >
                                             Start Date{" "}
                                           </label>
                                           <DatePicker
-                                            className="form-input"
+                                            className={
+                                              fieldErrors[
+                                                `professionalExperienceData[${index}].startDate`
+                                              ]
+                                                ? "form-input-err"
+                                                : "form-input"
+                                            }
                                             name="startDate"
                                             onChange={(date) =>
                                               handleChange(
@@ -199,7 +243,14 @@ function UserProfileRegister4({
                                           />
                                         </div>
                                         <div className="endDate">
-                                          <label className="form-label">
+                                          <label
+                                            style={
+                                              fieldErrors[
+                                                `professionalExperienceData[${index}].startDate`
+                                              ] && { color: "red" }
+                                            }
+                                            className="form-label"
+                                          >
                                             End Date{" "}
                                           </label>
                                           <DatePicker
@@ -213,17 +264,41 @@ function UserProfileRegister4({
                                               )
                                             }
                                             disabled={field.stillWorking}
-                                            className="form-input"
+                                            className={
+                                              fieldErrors[
+                                                `professionalExperienceData[${index}].startDate`
+                                              ]
+                                                ? "form-input-err"
+                                                : "form-input"
+                                            }
                                             name="endDate"
                                             selected={new Date(field?.endDate)}
                                             dateFormat="dd/MM/yyyy"
                                           />
                                         </div>
                                       </Form.Group>
+                                      {fieldErrors[
+                                        `professionalExperienceData[${index}].startDate`
+                                      ] && (
+                                        <span
+                                          style={{
+                                            color: "red",
+                                          }}
+                                        >
+                                          {
+                                            fieldErrors[
+                                              `professionalExperienceData[${index}].startDate`
+                                            ]
+                                          }
+                                        </span>
+                                      )}
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicEmail"
-                                        style={{ marginBottom: "20px" }}
+                                        style={{
+                                          marginBottom: "20px",
+                                          marginTop: 20,
+                                        }}
                                       >
                                         <div class="form-check">
                                           <input
@@ -253,7 +328,14 @@ function UserProfileRegister4({
                                         controlId="formBasicEmail"
                                         style={{ marginBottom: "20px" }}
                                       >
-                                        <label className="form-label">
+                                        <label
+                                          style={
+                                            fieldErrors[
+                                              `professionalExperienceData[${index}].title`
+                                            ] && { color: "red" }
+                                          }
+                                          className="form-label"
+                                        >
                                           Title{" "}
                                         </label>
                                         <input
@@ -265,12 +347,30 @@ function UserProfileRegister4({
                                               "title"
                                             )
                                           }
-                                          required="required"
+                                          style={
+                                            fieldErrors[
+                                              `professionalExperienceData[${index}].title`
+                                            ] && {
+                                              backgroundImage:
+                                                "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                                            }
+                                          }
                                           className="form-input"
                                           type="text"
                                           name="title"
                                           value={field.title}
                                         />
+                                        {fieldErrors[
+                                          `professionalExperienceData[${index}].title`
+                                        ] && (
+                                          <span style={{ color: "red" }}>
+                                            {
+                                              fieldErrors[
+                                                `professionalExperienceData[${index}].title`
+                                              ]
+                                            }
+                                          </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group
                                         className="mb-3"

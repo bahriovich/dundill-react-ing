@@ -1,13 +1,13 @@
 .register {
-    display: flex;
-    width: 100%;
-    height: 100vh;
+  display: flex;
+  width: 100%;
+  height: 100vh;
 }
 
 .logo {
-    position: absolute;
-    top: 40px;
-    left: 60px;
+  position: absolute;
+  top: 40px;
+  left: 60px;
 }
 
 /* .left-side {
@@ -23,53 +23,49 @@
     background-color: white;
 } */
 
-
 .form-next-button {
-    display: flex;
-    position: absolute;
-    bottom: 50px;
-    right: 165px;
+  display: flex;
+  position: absolute;
+  bottom: 50px;
+  right: 165px;
 }
 
-.form-next-button>button {
-    width: 130px;
-    height: 50px;
-    color: white;
-    font-size: 20px;
-    border: none;
-    background-color: #FF3769;
-    border-radius: 30px;
+.form-next-button > button {
+  width: 130px;
+  height: 50px;
+  color: white;
+  font-size: 20px;
+  border: none;
+  background-color: #ff3769;
+  border-radius: 30px;
 }
-
-
 
 .form-back-button {
-    display: flex;
-    position: absolute;
-    bottom: 50px;
-    right: 720px;
+  display: flex;
+  position: absolute;
+  bottom: 50px;
+  right: 720px;
 }
 
-.form-back-button>button {
-    width: 130px;
-    height: 50px;
-    color: white;
-    font-size: 20px;
-    border: none;
-    background-color: #555555;
-    border-radius: 30px;
+.form-back-button > button {
+  width: 130px;
+  height: 50px;
+  color: white;
+  font-size: 20px;
+  border: none;
+  background-color: #555555;
+  border-radius: 30px;
 }
 
-.form-next-button> button > a {
-    text-decoration: none;
-    color: white;
+.form-next-button > button > a {
+  text-decoration: none;
+  color: white;
 }
-
 
 @media screen and (max-width: 1300px) {
-    .form-back-button {
-        right: 620px;
-    }
+  .form-back-button {
+    right: 620px;
+  }
 }
 
 /* @media screen and (max-width: 1200px) {

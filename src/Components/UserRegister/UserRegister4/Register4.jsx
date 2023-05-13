@@ -1,6 +1,6 @@
 import React from "react";
 
-function UserRegister4({ signUpData, setSignUpData }) {
+function UserRegister4({ signUpData, setSignUpData, fieldErrors }) {
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
@@ -24,8 +24,19 @@ function UserRegister4({ signUpData, setSignUpData }) {
           <div className="form">
             <form action="">
               <div className="form-group">
-                <label className="form-label">Title </label>
+                <label
+                  style={fieldErrors["title"] && { color: "red" }}
+                  className="form-label"
+                >
+                  Title{" "}
+                </label>
                 <input
+                  style={
+                    fieldErrors[`title`] && {
+                      backgroundImage:
+                        "linear-gradient(#FF0000, #FF0000), linear-gradient(#FF0000, #FF0000)",
+                    }
+                  }
                   required="required"
                   className="form-input"
                   type="text"
@@ -35,6 +46,9 @@ function UserRegister4({ signUpData, setSignUpData }) {
                     handleChange(e);
                   }}
                 />
+                {fieldErrors[`title`] && (
+                  <span style={{ color: "red" }}>{fieldErrors[`title`]}</span>
+                )}
               </div>
             </form>
           </div>
