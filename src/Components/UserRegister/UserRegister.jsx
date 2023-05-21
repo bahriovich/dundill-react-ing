@@ -5,7 +5,6 @@ import Register1 from "./UserRegister1/Register1";
 import Register2 from "./UserRegister2/Register2";
 import Register3 from "./UserRegister3/Register3";
 import Register4 from "./UserRegister4/Register4";
-import { useMutation } from "@apollo/client";
 
 import UserProfileRegister from "../UserProfileRegister/UserProfileRegister";
 function UserRegister() {
@@ -21,14 +20,18 @@ function UserRegister() {
         fieldOfStudy: "",
         school: "",
         startDate: new Date().toISOString(),
-        endDate: new Date().toISOString(),
+        endDate: new Date(
+          new Date().setFullYear(new Date().getFullYear() + 1)
+        ).toISOString(),
       },
     ],
     professionalExperienceData: [
       {
         companyName: "",
         startDate: new Date().toISOString(),
-        endDate: new Date().toISOString(),
+        endDate: new Date(
+          new Date().setFullYear(new Date().getFullYear() + 1)
+        ).toISOString(),
         stillWorking: false,
         title: "",
         description: "",
@@ -42,7 +45,9 @@ function UserRegister() {
         certificationLink: "",
         certificationDate: new Date().toISOString(),
         doesItExpire: false,
-        expDate: new Date().toISOString(),
+        expDate: new Date(
+          new Date().setFullYear(new Date().getFullYear() + 1)
+        ).toISOString(),
       },
     ],
     profileSummary: {
@@ -217,7 +222,7 @@ function UserRegister() {
   const formSubmit = () => {
     setUserProfile(true);
   };
-  console.log(fieldErrors);
+
   return (
     <>
       {userProfile ? (

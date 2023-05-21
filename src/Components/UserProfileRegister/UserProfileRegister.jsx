@@ -235,7 +235,6 @@ function UserProfileRegister({
   };
 
   const prevClick = () => {
-    setSubmitted(false);
     setSignUpNumber(signUpNumber - 1);
   };
 
@@ -319,7 +318,7 @@ function UserProfileRegister({
   const hasElements = (obj) => {
     return Object.keys(obj).length > 0;
   };
-  //setSubmitted(true);
+
   ///mutations
   const [createUserProfile] = useMutation(CREATE_USER_PROFILE);
   const [createProfessionalExperience] = useMutation(
@@ -432,6 +431,7 @@ function UserProfileRegister({
         });
       }
       console.log("done");
+      setSubmitted(true);
     } catch (error) {
       console.error(error);
     }
@@ -444,59 +444,62 @@ function UserProfileRegister({
           <img src={Logo} alt="" />
         </div>
         {signUpChoice(signUpNumber)}
+        {!submitted && (
+          <>
+            {signUpNumber >= 0 && signUpNumber < 6 && (
+              <div className="form-next-button">
+                <button
+                  style={
+                    hasElements(fieldErrors)
+                      ? {
+                          cursor: "pointer",
+                          background: "gray",
+                          opacity: 0.6,
+                        }
+                      : {
+                          cursor: "pointer",
+                        }
+                  }
+                  disabled={hasElements(fieldErrors)}
+                  onClick={handleClick}
+                >
+                  Next
+                </button>
+              </div>
+            )}
 
-        {signUpNumber >= 0 && signUpNumber < 6 && (
-          <div className="form-next-button">
-            <button
-              style={
-                hasElements(fieldErrors)
-                  ? {
-                      cursor: "pointer",
-                      background: "gray",
-                      opacity: 0.6,
-                    }
-                  : {
-                      cursor: "pointer",
-                    }
-              }
-              disabled={hasElements(fieldErrors)}
-              onClick={handleClick}
-            >
-              Next
-            </button>
-          </div>
-        )}
+            {signUpNumber >= 1 && (
+              <div className="form-back-button" id="form-back-button">
+                <button style={{ cursor: "pointer" }} onClick={prevClick}>
+                  Back
+                </button>
+              </div>
+            )}
 
-        {signUpNumber >= 1 && (
-          <div className="form-back-button" id="form-back-button">
-            <button style={{ cursor: "pointer" }} onClick={prevClick}>
-              Back
-            </button>
-          </div>
-        )}
-
-        {signUpNumber === 6 && (
-          <div className="form-next-button">
-            <button
-              style={
-                hasElements(fieldErrors)
-                  ? {
-                      cursor: "pointer",
-                      background: "gray",
-                      opacity: 0.6,
-                    }
-                  : {
-                      cursor: "pointer",
-                    }
-              }
-              disabled={hasElements(fieldErrors)}
-              type="button"
-              onClick={handleSignUp}
-            >
-              {" "}
-              Done{" "}
-            </button>
-          </div>
+            {signUpNumber === 6 && (
+              <div className="form-next-button">
+                <button
+                  style={
+                    hasElements(fieldErrors)
+                      ? {
+                          cursor: "pointer",
+                          background: "gray",
+                          opacity: 0.6,
+                        }
+                      : {
+                          cursor: "pointer",
+                        }
+                  }
+                  disabled={hasElements(fieldErrors)}
+                  type="button"
+                  onClick={handleSignUp}
+                >
+                  {" "}
+                  Done{" "}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

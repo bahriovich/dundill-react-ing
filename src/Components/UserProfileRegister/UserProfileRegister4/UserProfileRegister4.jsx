@@ -16,7 +16,9 @@ function UserProfileRegister4({
     let expObject = {
       companyName: "",
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: new Date(
+        new Date().setFullYear(new Date().getFullYear() + 1)
+      ).toISOString(),
       stillWorking: false,
       title: "",
       description: "",
@@ -39,7 +41,7 @@ function UserProfileRegister4({
       return data;
     });
   }
-  console.log(fieldErrors);
+
   return (
     <>
       <div className="left-side">
@@ -378,7 +380,7 @@ function UserProfileRegister4({
                                         style={{ marginBottom: "20px" }}
                                       >
                                         <label className="form-label">
-                                          Description{" "}
+                                          Description {"(Optional Field) "}
                                         </label>
                                         <textarea
                                           type="text"

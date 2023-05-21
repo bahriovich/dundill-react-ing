@@ -1,7 +1,7 @@
 import { Select } from "antd";
 import React from "react";
 import "./UserProfileRegister3.css";
-
+import TeckImg from "../../../img/techStack.jpg";
 function UserProfileRegister3({
   userProfileData,
   setUserProfileData,
@@ -40,10 +40,10 @@ function UserProfileRegister3({
                     <div className="skill">
                       <div className="skillnameskillimage">
                         <img
-                          src={elem.image_url}
-                          alt=""
-                          height={25}
-                          width={25}
+                          src={elem.image_url ?? TeckImg}
+                          alt="logo"
+                          height={33}
+                          width={39}
                         />
                         <span> {elem.name} </span>
                       </div>

@@ -19,7 +19,9 @@ function UserProfileRegister6({
       certificationLink: "",
       certificationDate: new Date(),
       doesItExpire: false,
-      expDate: new Date(),
+      expDate: new Date(
+        new Date().setFullYear(new Date().getFullYear() + 1)
+      ).toISOString(),
     };
     setUserProfileData((prev) => {
       let data = { ...prev };
@@ -34,7 +36,7 @@ function UserProfileRegister6({
       return data;
     });
   }
-  console.log(fieldErrors);
+
   return (
     <>
       <div className="left-side">
@@ -250,7 +252,7 @@ function UserProfileRegister6({
                                       >
                                         <div className="startDate">
                                           <label className="form-label">
-                                            Obtained At
+                                            Obtained At (Optional Field)
                                           </label>
                                           <DatePicker
                                             className="form-input"
@@ -296,7 +298,7 @@ function UserProfileRegister6({
                                             class="form-check-label"
                                             for="flexCheckDefault"
                                           >
-                                            Does it expire?
+                                            Does it expire? (Optional Field)
                                           </label>
                                         </div>
                                       </Form.Group>
@@ -314,7 +316,7 @@ function UserProfileRegister6({
                                         >
                                           <div className="endDate">
                                             <label className="form-label">
-                                              Expire At
+                                              Expire At (Optional Field)
                                             </label>
                                             <DatePicker
                                               onChange={(date) =>
@@ -342,7 +344,7 @@ function UserProfileRegister6({
                                         style={{ marginBottom: "20px" }}
                                       >
                                         <label className="form-label">
-                                          Certification Link
+                                          Certification Link (Optional Field)
                                         </label>
                                         <input
                                           onChange={(e) =>

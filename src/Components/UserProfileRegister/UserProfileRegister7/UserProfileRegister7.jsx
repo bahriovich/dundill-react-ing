@@ -1,8 +1,9 @@
 import React from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import Celebration from "../../../img/celebration.jpg";
 import { Steps } from "antd";
+import { PopupButton } from "react-calendly";
 
 const commitment_options = [
   { value: "High", label: "I'm fully committed" },
@@ -34,8 +35,8 @@ function UserProfileRegister7({
       return data;
     });
   }
-  console.log(fieldErrors);
-  const description = "This is a description.";
+
+  const description = "We will review your application carefully.";
   return (
     <>
       {submitted ? (
@@ -57,21 +58,130 @@ function UserProfileRegister7({
                   justifyContent: "flex-start",
                 }}
               >
+                <img src={Celebration} alt="done" width={70} height={70} />
+                <h1 style={{ fontSize: 20, textTransform: "capitalize" }}>
+                  Done! You did great so far!
+                </h1>
+                <h2
+                  style={{
+                    fontSize: 16,
+                    textTransform: "capitalize",
+                    fontWeight: 500,
+                    lineHeight: 0.05,
+                  }}
+                >
+                  We are glad you want to be part of Dundill!
+                </h2>
+                <h2
+                  style={{
+                    fontSize: 16,
+                    textTransform: "capitalize",
+                    fontWeight: 500,
+                    lineHeight: 0.05,
+                  }}
+                >
+                  Let's look at the next steps.
+                </h2>
                 <Steps
                   direction="vertical"
                   current={1}
                   items={[
                     {
-                      title: "Finished",
-                      description,
+                      title: <h3 style={{ margin: 0 }}>Applied</h3>,
+                      style: {
+                        border: "2px solid black",
+                        borderRadius: 10,
+                        padding: 10,
+                        marginTop: 10,
+                      },
                     },
                     {
-                      title: "In Progress",
-                      description,
+                      title: <h3 style={{ margin: 0 }}>Under Review</h3>,
+                      description: (
+                        <div>
+                          <h5
+                            style={{ margin: 0, fontWeight: 500, fontSize: 16 }}
+                          >
+                            {description}
+                          </h5>
+                          <h5
+                            style={{ margin: 0, fontWeight: 500, fontSize: 16 }}
+                          >
+                            Schedule your Intro Call from the calendar
+                          </h5>
+                          <PopupButton
+                            url="https://calendly.com/abdelkhalek-salah01/interview"
+                            rootElement={document.getElementById("root")}
+                            text="Click here to schedule!"
+                            textColor="#ffffff"
+                            styles={{
+                              padding: 5,
+                              background: "white",
+                              border: "0.5px solid gray",
+                              borderRadius: 10,
+                              fontSize: 16,
+                            }}
+                          />
+                        </div>
+                      ),
+                      style: {
+                        border: "2px solid black",
+                        borderRadius: 10,
+                        padding: 10,
+                        marginTop: 10,
+                      },
                     },
                     {
-                      title: "Waiting",
-                      description,
+                      title: (
+                        <h3 style={{ margin: 0, fontWeight: 400 }}>
+                          Intro call with talent specialist
+                        </h3>
+                      ),
+                      style: {
+                        border: "2px solid black",
+                        borderRadius: 10,
+                        padding: 10,
+                        marginTop: 10,
+                      },
+                    },
+                    {
+                      title: (
+                        <h3 style={{ margin: 0, fontWeight: 400 }}>
+                          Coding Test
+                        </h3>
+                      ),
+                      style: {
+                        border: "2px solid black",
+                        borderRadius: 10,
+                        padding: 10,
+                        marginTop: 10,
+                      },
+                    },
+                    {
+                      title: (
+                        <h3 style={{ margin: 0, fontWeight: 400 }}>
+                          Final technical interview
+                        </h3>
+                      ),
+                      style: {
+                        border: "2px solid black",
+                        borderRadius: 10,
+                        padding: 10,
+                        marginTop: 10,
+                      },
+                    },
+                    {
+                      title: (
+                        <h3 style={{ margin: 0, fontWeight: 400 }}>
+                          Join Dundill and explore opportunities
+                        </h3>
+                      ),
+                      style: {
+                        border: "2px solid black",
+                        borderRadius: 10,
+                        padding: 10,
+                        marginTop: 10,
+                      },
                     },
                   ]}
                 />
@@ -275,7 +385,7 @@ function UserProfileRegister7({
                     </div>
                     <div style={{ marginBottom: "20px" }}>
                       <label className="form-label">
-                        Link for github account
+                        Link for github account (Optional Field)
                       </label>
                       <input
                         onChange={(e) => handleDataChange(e, "githubUrl", null)}

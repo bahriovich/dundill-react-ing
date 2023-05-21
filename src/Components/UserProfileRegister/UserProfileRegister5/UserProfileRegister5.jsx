@@ -18,7 +18,9 @@ function UserProfileRegister5({
       fieldOfStudy: "",
       school: "",
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: new Date(
+        new Date().setFullYear(new Date().getFullYear() + 1)
+      ).toISOString(),
     };
     setUserProfileData((prev) => {
       let data = { ...prev };

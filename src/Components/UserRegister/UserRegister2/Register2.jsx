@@ -99,7 +99,7 @@ function UserRegister2({ signUpData, setSignUpData, fieldErrors }) {
                   <span style={{ color: "red" }}> {fieldErrors["city"]} </span>
                 )}
               </div>
-              <div class="form-check">
+              {/* <div class="form-check">
                 <input
                   onChange={(e) => changeCheckBox(e)}
                   class="form-check-input"
@@ -111,7 +111,7 @@ function UserRegister2({ signUpData, setSignUpData, fieldErrors }) {
                   I am planning to move to a different timezone within the next
                   6 months
                 </label>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
