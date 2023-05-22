@@ -110,7 +110,7 @@ function UserProfileRegister7({
                             Schedule your Intro Call from the calendar
                           </h5>
                           <PopupButton
-                            url="https://calendly.com/abdelkhalek-salah01/interview"
+                            url="https://calendly.com/dundill/30min"
                             rootElement={document.getElementById("root")}
                             text="Click here to schedule!"
                             textColor="#ffffff"
